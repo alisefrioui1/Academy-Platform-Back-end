@@ -19,11 +19,7 @@ return new class extends Migration
             $table->text('content');
             $table->string('state');
             $table->string('link')->nullable();
-            $table->tinyInteger('is_bookmarked')->nullable();
-            $table->string('image1');
-            $table->string('image2')->nullable();
-            $table->string('image3')->nullable();
-            $table->foreignId('plan_id')->constrained()->cascadeOnDelete();
+            $table->string('image');
             $table->softDeletes();
             $table->timestamps();
         });

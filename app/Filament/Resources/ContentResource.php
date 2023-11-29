@@ -15,7 +15,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\FileUpload;
-
+use Filament\Forms\Components\Select;
 
 class ContentResource extends Resource
 {
@@ -34,12 +34,17 @@ class ContentResource extends Resource
                             Forms\Components\TextInput::make('subject')
                                 ->required()
                                ,
-                               Forms\Components\TextInput::make('category')
-                               ->required()
-                              ,
-                              Forms\Components\TextInput::make('sub_category')
-                              
-                              ,
+                               Select::make('category')
+                               ->options([
+                                   'formation' => 'formation',
+                                   'idee' => 'idée & anlyse',
+                               ]),
+                               Select::make('sub_category')
+                               ->options([
+                                   'test_sub' => 'test_sub',
+                                  
+                               ]),
+                           
 
                          
 
@@ -51,33 +56,19 @@ class ContentResource extends Resource
                                 ->required(),
                                 Forms\Components\TextInput::make('link')
                                 ->required(),
-                                 Forms\Components\TextInput::make('is_bookmarked')
-                                 ->numeric()
-                                ->required(),
+                              
                             Forms\Components\Select::make('plan_id')
-                                ->relationship('plan', 'designation')
+                                ->relationship('plans', 'designation')
                                 ->required(),
                                 Forms\Components\Section::make('Image')
                                 ->schema([
-                                    Forms\Components\FileUpload::make('image1')
-                                        ->label('Image 1')
+                                    Forms\Components\FileUpload::make('image')
+                                        ->label('Image ')
                                         ->image()
                                        
                                 ]),
-                                Forms\Components\Section::make('Image')
-                                ->schema([
-                                    Forms\Components\FileUpload::make('image2')
-                                        ->label('Image 2')
-                                        ->image()
-                                       
-                                ]),
-                                Forms\Components\Section::make('Image')
-                                ->schema([
-                                    Forms\Components\FileUpload::make('image3')
-                                        ->label('Image 3')
-                                        ->image()
-                                       
-                                ])
+                             
+                            
                             
                            
 
@@ -95,7 +86,7 @@ class ContentResource extends Resource
         return $table
             ->columns([
                 //
-                ImageColumn::make('image1'),
+                ImageColumn::make('image'),
                 TextColumn::make('subject')
               ->searchable(),
               TextColumn::make('category')
@@ -107,7 +98,7 @@ class ContentResource extends Resource
                     ->label('content')
                     ->listWithLineBreaks()
                     ->limit(5),
-            TextColumn::make('plan.designation')
+            TextColumn::make('plans.designation')
                  
                     
             ])

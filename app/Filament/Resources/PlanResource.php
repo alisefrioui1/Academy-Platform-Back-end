@@ -7,6 +7,7 @@ use App\Filament\Resources\PlanResource\RelationManagers;
 use App\Models\Plan;
 use Filament\Actions\DeleteAction;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -34,6 +35,12 @@ class PlanResource extends Resource
                ->numeric()
                ->rules(['integer', 'min:0'])
                ->required(),
+               Select::make('state')
+                ->options([
+                    'draft' => 'Draft',
+                    'reviewing' => 'Reviewing',
+                    'published' => 'Published',
+                ])
             ]);
     }
 
@@ -44,6 +51,8 @@ class PlanResource extends Resource
                 //
                 Tables\Columns\TextColumn::make('designation'),
                 Tables\Columns\TextColumn::make('pricing'),
+                Tables\Columns\TextColumn::make('state')
+                ->badge(),
             ])
             ->filters([
                 //

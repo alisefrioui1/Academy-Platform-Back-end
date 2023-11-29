@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('city');
             $table->string('role');
             $table->string('user_state');
+            $table->string('description');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

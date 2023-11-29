@@ -2,12 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\UserPResource\Pages;
-use App\Filament\Resources\UserPResource\RelationManagers;
-use App\Models\user_p;
-use App\Models\UserP;
-use Filament\Actions\Action;
-use Filament\Actions\CreateAction;
+use App\Filament\Resources\FaqResource\Pages;
+use App\Filament\Resources\FaqResource\RelationManagers;
+use App\Models\Faq;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -16,33 +13,31 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class UserPResource extends Resource
+class FaqResource extends Resource
 {
-  
-    protected static ?string $model = "users";
+    protected static ?string $model = Faq::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 //
-                Forms\Components\TextInput::make('name')->required(),
-                Forms\Components\FileUpload::make('photo'),
-                Forms\Components\TextInput::make('username')
-                        ->required()
-                        ->unique(ignoreRecord: true),
-             Forms\Components\TextInput::make('gender')->required(),
-             Forms\Components\TextInput::make('phone_number')->required(),
-             Forms\Components\TextInput::make('city')->required(),
-             Forms\Components\TextInput::make('user_state')->required(),
-             Forms\Components\TextInput::make('email')->required(),
-
-
-
+                Forms\Components\TextInput::make('question')
+                ->label('Question')
+                ->required()
+               ,
+               Forms\Components\TextInput::make('respond')
+               ->label('réponse ')
+               ->required(),
+               Tables\Columns\IconColumn::make('state')
+               ->label('Etat')
+               ->boolean()
+               ->sortable(),
             ]);
 
+           
     }
 
     public static function table(Table $table): Table
@@ -55,7 +50,10 @@ class UserPResource extends Resource
                 //
             ])
             ->actions([
+         
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -77,9 +75,8 @@ class UserPResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUserPS::route('/'),
-            'create' => Pages\CreateUserP::route('/create'),
-            'edit' => Pages\EditUserP::route('/{record}/edit'),
+            'index' => Pages\ListFaqs::route('/'),
+          
         ];
     }    
 }

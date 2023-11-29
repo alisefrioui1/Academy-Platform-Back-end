@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('designation');
             $table->integer('pricing');
+            $table->string('state');
             $table->softDeletes();
             $table->timestamps();
         });

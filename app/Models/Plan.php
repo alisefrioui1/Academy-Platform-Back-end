@@ -11,18 +11,19 @@ class Plan extends Model
     protected $fillable = [
         'designation',
         'pricing',
+        'state',
 
        
     ];
     use SoftDeletes;
 
     use HasFactory;
-    public function content()
+    public function contents()
     {
-       return  $this->hasMany(Content::class);
+      return  $this->belongsToMany(Content::class);
     }
-    public function service()
+    public function services()
     {
-       return  $this->hasMany(Service::class);
+       return  $this->belongsToMany(Service::class);
     }
 }

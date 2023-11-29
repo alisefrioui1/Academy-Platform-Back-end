@@ -14,19 +14,17 @@ class Content extends Model
         'sub_category',
         'content',
         'state',
-        'link',
-        'is_bookmarked',
-        'image1',
-        'image2',
-        'image3',
-        'plan_id',
+        'link',  
+        'image',
+       
+      
       
     ];
     use HasFactory;
     use SoftDeletes;
-    public function plan()
+    public function plans()
     {
-      return  $this->belongsTo(Plan::class);
+      return  $this->belongsToMany(Plan::class);
     }
    
 }

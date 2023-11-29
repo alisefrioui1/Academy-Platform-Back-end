@@ -10,14 +10,15 @@ class Service extends Model
 {
     protected $fillable = [
         'designation',
-        'plan_id',
+       
        
        
     ];
     use HasFactory;
     use SoftDeletes;
-    public function plan()
+    public function plans()
     {
-      return  $this->belongsTo(Plan::class);
+      return  $this->belongsToMany(Plan::class);
     }
+  
 }
